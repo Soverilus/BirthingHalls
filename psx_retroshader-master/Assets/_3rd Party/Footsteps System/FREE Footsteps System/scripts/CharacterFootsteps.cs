@@ -57,7 +57,7 @@ namespace Footsteps {
 
 		Transform thisTransform;
 		RaycastHit currentGroundInfo;
-		float stepCycleProgress;
+        public float stepCycleProgress;
 		float lastPlayTime;
 		bool previouslyGrounded;
 		bool isGrounded;
