@@ -3,7 +3,7 @@
 namespace Footsteps {
 
 	[RequireComponent(typeof(CharacterController))]
-	public class FirstPersonController : MonoBehaviour {
+	public class FirstPersonControllerTwo : MonoBehaviour {
 
 		public Vector3 velocity { get; private set; }
 		public bool isJumping { get; private set; }

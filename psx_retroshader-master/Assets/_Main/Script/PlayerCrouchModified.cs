@@ -11,10 +11,12 @@ public class PlayerCrouchModified : MonoBehaviour {
     Vector3 crouchCameraPosition;
     public bool holdToCrouch = true;
     FirstPersonController myCC;
-
+    Footsteps.CharacterFootsteps myCF;
     public bool tapSwitch = true;
     // public float speed=3.0f;
     public bool isCrouch = false;
+
+    public Vector2 volMinMax;
 
 
     private Vector3 direction = Vector3.zero;
@@ -24,11 +26,12 @@ public class PlayerCrouchModified : MonoBehaviour {
         myCameraPosition = currentCamera.transform.localPosition;
         crouchCameraPosition = new Vector3(myCameraPosition.x, myCameraPosition.y * percentageFromFloor, myCameraPosition.z);
         myCC = GetComponent<FirstPersonController>();
+        myCF = GetComponent<Footsteps.CharacterFootsteps>();
         // motor = GetComponent<charactermotor>();
     }
 
     void Update() {
-        if (Input.GetAxis("Crouch") <= 0) {
+        if (Input.GetAxis("Crouch") == 0) {
             tapSwitch = true;
         }
         if (holdToCrouch) {
@@ -44,6 +47,8 @@ public class PlayerCrouchModified : MonoBehaviour {
             if (currentCamera.transform.localPosition != crouchCameraPosition) {
                 currentCamera.transform.localPosition = Vector3.Lerp(currentCamera.transform.localPosition, crouchCameraPosition, 0.1f);
             }
+            myCF.minVolMult = volMinMax.x;
+            myCF.maxVolMult = volMinMax.y;
             // if (script) script.enabled = false;
             //  GetComponent<CharacterMotor>().enabled = false;
             // speed = 1.0f;
@@ -56,6 +61,8 @@ public class PlayerCrouchModified : MonoBehaviour {
             }
             else {
                 myCC.waitForCamera = false;
+                myCF.minVolMult = 1f;
+                myCF.maxVolMult = 1f;
             }
             //  GetComponent<CharacterController>().enabled=true;
 
@@ -69,7 +76,7 @@ public class PlayerCrouchModified : MonoBehaviour {
     }
 
     void HoldCrouch() {
-        if (Input.GetAxis("Crouch") != 0 && !isCrouch && tapSwitch) {
+        if (Input.GetAxis("Crouch") > 0 && !isCrouch && tapSwitch) {
             isCrouch = true;
             tapSwitch = false;
 
@@ -83,7 +90,7 @@ public class PlayerCrouchModified : MonoBehaviour {
     }
 
     void TapCrouch() {
-        if (Input.GetAxis("Crouch") != 0) {
+        if (Input.GetAxis("Crouch") > 0) {
             if (tapSwitch) {
                 if (isCrouch) {
                     isCrouch = false;

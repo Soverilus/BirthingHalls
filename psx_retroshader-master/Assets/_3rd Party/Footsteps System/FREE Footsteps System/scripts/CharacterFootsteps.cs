@@ -36,8 +36,10 @@ namespace Footsteps {
 		[Tooltip("You need an audio source to play a footstep sound.")]
 		[SerializeField] AudioSource audioSource;
 
-		// Random volume between this limits
-		[SerializeField] float minVolume = 0.3f;
+        // Random volume between this limits
+        [HideInInspector] public float minVolMult = 1f;
+        [HideInInspector] public float maxVolMult = 1f;
+        [SerializeField] float minVolume = 0.3f;
 		[SerializeField] float maxVolume = 0.5f;
 
 		[Tooltip("If this is enabled, you can see how far the script will check for ground, and the radius of the check.")]
@@ -116,7 +118,7 @@ namespace Footsteps {
 
 		void PlayFootstep() {
 			AudioClip randomFootstep = SurfaceManager.singleton.GetFootstep(currentGroundInfo.collider, currentGroundInfo.point);
-			float randomVolume = Random.Range(minVolume, maxVolume);
+			float randomVolume = Random.Range(minVolume*minVolMult, maxVolume*maxVolMult);
 
 			if(randomFootstep) {
 				audioSource.PlayOneShot(randomFootstep, randomVolume);

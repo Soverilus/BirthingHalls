@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class InfWalk : MonoBehaviour {
-    [HideInInspector]
-    public GameObject oldHall;
+    [HideInInspector] public GameObject oldHall;
 
     public GameObject end;
     GameObject myPlayer;
     Vector3 bounds;
-
+    GameObject oldEnd;
     InfWalk cloneIW;
     bool oldIsVisible;
 
-    [HideInInspector]
     public GameObject myClone;
 
     void Start() {
@@ -21,7 +19,7 @@ public class InfWalk : MonoBehaviour {
     }
     void OnCollisionEnter(Collision collision) {
         if (!myPlayer) {
-            Destroy(myClone);
+            oldEnd = myClone;
             myClone = Instantiate(gameObject, new Vector3(transform.position.x, transform.position.y, transform.position.z + bounds.z * 1.75f), transform.rotation);
             myPlayer = collision.gameObject;
             cloneIW = myClone.GetComponent<InfWalk>();
@@ -37,7 +35,8 @@ public class InfWalk : MonoBehaviour {
     }
 
     IEnumerator ReplaceOldHall() {
-        yield return new WaitUntil(() => !oldHall.GetComponent<Renderer>().isVisible);
+        yield return new WaitUntil(() => !oldHall.GetComponent<Renderer>().isVisible||Vector3.Distance(oldHall.transform.position, myPlayer.transform.position) >= 15f);
+        Destroy(oldEnd);
         cloneIW.myClone = Instantiate(end, oldHall.transform.position, transform.rotation);
         Destroy(oldHall);
     }
