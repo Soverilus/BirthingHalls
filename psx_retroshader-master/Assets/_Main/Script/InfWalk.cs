@@ -22,14 +22,14 @@ public class InfWalk : MonoBehaviour {
     void OnCollisionEnter(Collision collision) {
         if (!myPlayer) {
             oldEnd = myClone;
-            myClone = Instantiate(gameObject, new Vector3(transform.position.x, transform.position.y, transform.position.z + extents.z*1.99f), transform.rotation);
+            myClone = Instantiate(gameObject, new Vector3(transform.position.x, transform.position.y, transform.position.z + extents.z * 1.99f), transform.rotation);
             myPlayer = collision.gameObject;
             cloneIW = myClone.GetComponent<InfWalk>();
-           cloneIW.oldHall = gameObject;
+            cloneIW.oldHall = gameObject;
             if (oldHall) {
                 //replace oldHall with ending backwards hall.
                 StartCoroutine(ReplaceOldHall());
-                
+
                 //myClone.GetComponent<InfWalk>().myClone = Instantiate(end, oldHall.transform.position, transform.rotation);
                 //Destroy(oldHall);
             }
@@ -37,7 +37,7 @@ public class InfWalk : MonoBehaviour {
     }
 
     IEnumerator ReplaceOldHall() {
-        yield return new WaitUntil(() => !oldHall.GetComponent<Renderer>().isVisible||Vector3.Distance(oldHall.transform.position, myPlayer.transform.position) >= 15f);
+        yield return new WaitUntil(() => !oldHall.GetComponent<Renderer>().isVisible || Vector3.Distance(oldHall.transform.position, myPlayer.transform.position) >= 15f);
         Destroy(oldEnd);
         Vector3 myNewPos;
         myNewPos = new Vector3(oldHall.transform.position.x, oldHall.transform.position.y, (oldHall.transform.position.z + extents.z * 2f) - extents.z - endExtents.z);

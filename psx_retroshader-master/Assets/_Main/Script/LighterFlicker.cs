@@ -25,11 +25,11 @@ public class LighterFlicker : MonoBehaviour {
     }
 
     void Update() {
-            Cooldown();
-            if (timer >= maxTimer) {
-                LightAction();
-            }
-            LightIntensity();
+        Cooldown();
+        if (timer >= maxTimer) {
+            LightAction();
+        }
+        LightIntensity();
     }
 
     void Cooldown() {
