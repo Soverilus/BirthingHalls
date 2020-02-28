@@ -7,7 +7,8 @@ public class InfWalk : MonoBehaviour {
 
     public GameObject end;
     GameObject myPlayer;
-    Vector3 bounds;
+    Vector3 extents;
+    Vector3 endExtents;
     GameObject oldEnd;
     InfWalk cloneIW;
     bool oldIsVisible;
@@ -15,12 +16,13 @@ public class InfWalk : MonoBehaviour {
     public GameObject myClone;
 
     void Start() {
-        bounds = GetComponent<Collider>().bounds.extents;
+        extents = GetComponent<Collider>().bounds.extents;
+        endExtents = end.GetComponent<Collider>().bounds.extents;
     }
     void OnCollisionEnter(Collision collision) {
         if (!myPlayer) {
             oldEnd = myClone;
-            myClone = Instantiate(gameObject, new Vector3(transform.position.x, transform.position.y, transform.position.z + bounds.z * 1.75f), transform.rotation);
+            myClone = Instantiate(gameObject, new Vector3(transform.position.x, transform.position.y, transform.position.z + extents.z*1.99f), transform.rotation);
             myPlayer = collision.gameObject;
             cloneIW = myClone.GetComponent<InfWalk>();
            cloneIW.oldHall = gameObject;
@@ -37,7 +39,9 @@ public class InfWalk : MonoBehaviour {
     IEnumerator ReplaceOldHall() {
         yield return new WaitUntil(() => !oldHall.GetComponent<Renderer>().isVisible||Vector3.Distance(oldHall.transform.position, myPlayer.transform.position) >= 15f);
         Destroy(oldEnd);
-        cloneIW.myClone = Instantiate(end, oldHall.transform.position, transform.rotation);
+        Vector3 myNewPos;
+        myNewPos = new Vector3(oldHall.transform.position.x, oldHall.transform.position.y, (oldHall.transform.position.z + extents.z * 2f) - extents.z - endExtents.z);
+        cloneIW.myClone = Instantiate(end, myNewPos, transform.rotation);
         Destroy(oldHall);
     }
 }

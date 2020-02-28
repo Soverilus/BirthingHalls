@@ -5,17 +5,20 @@ using UnityEngine;
 public class LighterFlicker : MonoBehaviour {
     bool lightAttempt = false;
     bool lightEnabled = false;
+    public GameObject lighterObject;
     int attemptNo;
     public int attemptMax;
     Light myLight;
     AudioSource myAudio;
     public AudioClip[] myClips;
-    float baseIntensity = 5f;
+    public float baseIntensity = 5f;
+    [Range(0, 1)] public float percentFlicker = 0.75f;
     float myIntensity = 0f;
     float timer;
     float maxTimer = 0.75f;
 
     private void Start() {
+        lighterObject.SetActive(false);
         myAudio = GetComponent<AudioSource>();
         myLight = GetComponent<Light>();
         myLight.intensity = 0f;
@@ -36,21 +39,22 @@ public class LighterFlicker : MonoBehaviour {
     }
 
     void LightIntensity() {
-        float targetIntensity = myIntensity - Random.Range(0f, baseIntensity * 0.75f);
+        float targetIntensity = myIntensity - Random.Range(0, baseIntensity * percentFlicker);
         myLight.intensity = Mathf.Clamp(Mathf.Lerp(myLight.intensity, targetIntensity, 0.25f), 0, baseIntensity);
     }
 
     void LightAction() {
-        if (Input.GetAxis("Lighter") <= 0 && lightAttempt) {
+        if (Input.GetAxis("RightClick") <= 0 && lightAttempt) {
             lightAttempt = false;
         }
-        if (Input.GetAxis("Lighter") > 0 && !lightAttempt) {
+        if (Input.GetAxis("RightClick") > 0 && !lightAttempt) {
             lightAttempt = true;
             timer = 0f;
             if (lightEnabled) {
                 myIntensity = 0f;
                 attemptNo = 0;
                 lightEnabled = false;
+                lighterObject.SetActive(false);
                 return;
             }
             else {
@@ -69,6 +73,7 @@ public class LighterFlicker : MonoBehaviour {
         yield return new WaitForSecondsRealtime(0.5f);
         myIntensity = baseIntensity;
         lightEnabled = true;
+        lighterObject.SetActive(true);
     }
 
     void PlaySound() {
