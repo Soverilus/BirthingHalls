@@ -100,7 +100,6 @@ namespace UnityStandardAssets.Characters.FirstPerson {
                 RotateView();
             }
             // the jump state needs to read here to make sure it is not missed
-            // Asif: I fixed the jumping twice problem :P
             if (!m_Jump && !m_Jumping) {
                 m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
             }

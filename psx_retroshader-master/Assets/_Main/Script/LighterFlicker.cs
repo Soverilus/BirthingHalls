@@ -5,6 +5,7 @@ using UnityEngine;
 public class LighterFlicker : MonoBehaviour {
     bool lightAttempt = false;
     bool lightEnabled = false;
+
     public GameObject lighterObject;
     int attemptNo;
     public int attemptMax;
@@ -13,15 +14,28 @@ public class LighterFlicker : MonoBehaviour {
     public AudioClip[] myClips;
     public float baseIntensity = 5f;
     [Range(0, 1)] public float percentFlicker = 0.75f;
+    [Range(0, 1)] public float colorFlicker = 0.75f;
+    [Range(0, 1)] public float percentFlickerSpeed = 0.25f;
+    [Range(0, 1)] public float colorFlickerSpeed = 0.1f;
     float myIntensity = 0f;
     float timer;
     float maxTimer = 0.75f;
+
+    Color myColor;
+    public Color targetColor;
 
     private void Start() {
         lighterObject.SetActive(false);
         myAudio = GetComponent<AudioSource>();
         myLight = GetComponent<Light>();
         myLight.intensity = 0f;
+        myColor = myLight.color;
+        if (targetColor == null) {
+            targetColor = myColor;
+        }
+        if (_StaticGameManager.PlayerStats.keepLighter) {
+            ForceEnableLighter();
+        }
     }
 
     void Update() {
@@ -40,7 +54,9 @@ public class LighterFlicker : MonoBehaviour {
 
     void LightIntensity() {
         float targetIntensity = myIntensity - Random.Range(0, baseIntensity * percentFlicker);
-        myLight.intensity = Mathf.Clamp(Mathf.Lerp(myLight.intensity, targetIntensity, 0.25f), 0, baseIntensity);
+        myLight.intensity = Mathf.Clamp(Mathf.Lerp(myLight.intensity, targetIntensity, percentFlickerSpeed), 0, baseIntensity);
+        Color colorTarget = Color.Lerp(myColor, targetColor, Random.Range(0, colorFlicker));
+        myLight.color = Color.Lerp(myLight.color, colorTarget, colorFlickerSpeed);
     }
 
     void LightAction() {
@@ -55,6 +71,7 @@ public class LighterFlicker : MonoBehaviour {
                 attemptNo = 0;
                 lightEnabled = false;
                 lighterObject.SetActive(false);
+                _StaticGameManager.PlayerStats.keepLighter = false;
                 return;
             }
             else {
@@ -69,11 +86,24 @@ public class LighterFlicker : MonoBehaviour {
         }
     }
 
+    public void ForceEnableLighter() {
+        myIntensity = baseIntensity;
+        lightEnabled = true;
+        lighterObject.SetActive(true);
+    }
+    public void ForceDisableLighter() {
+        myIntensity = 0f;
+        attemptNo = 0;
+        lightEnabled = false;
+        lighterObject.SetActive(false);
+    }
+
     IEnumerator ActivateLight() {
         yield return new WaitForSecondsRealtime(0.5f);
         myIntensity = baseIntensity;
         lightEnabled = true;
         lighterObject.SetActive(true);
+        _StaticGameManager.PlayerStats.keepLighter = true;
     }
 
     void PlaySound() {
