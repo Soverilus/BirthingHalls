@@ -27,5 +27,15 @@ public class ChangeNameOnStart : MonoBehaviour {
     }
     private void OnLevelWasLoaded(int level) {
         doorText.text = _StaticGameManager.Doors.DoorsOpenedString;
+        _StaticGameManager.EventParsing.EventParse();
+    }
+
+    public void EventParser(string eventName) {
+        StartCoroutine(eventName);
+    }
+
+    IEnumerator TestEvent() {
+
+        yield return new WaitForSeconds(1);
     }
 }
