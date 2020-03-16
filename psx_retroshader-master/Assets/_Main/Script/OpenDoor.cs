@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 
 public class OpenDoor : MonoBehaviour {
-    public string[] mySceneTypes;
+    public string[] mySceneTypes = new string[2];
     [Range(0.01f, 1f)] public float[] mySceneChances;
 
 
