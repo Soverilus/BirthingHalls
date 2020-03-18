@@ -19,21 +19,18 @@ public class OpenDoor : MonoBehaviour {
     }
 
     void WhichSceneToLoad() {
+        DoorCalc();
+    }
+
+    void DoorCalc() {
         //This function sets the "sceneToLoad" by getting a string and then comparing that string to any string in "myScenes"
         //First, get the scenetype to load
         //checks which type of scene to load.
         //Does this by checking which in a random.range is highest based on the Door's in-scene chances for a type.
-        float[] myResult = new float[mySceneChances.Length];
-        for (int i = 0; i < mySceneChances.Length; i++) {
-            myResult[i] = Random.Range(0, mySceneChances.Length);
+        TypeCalc();
+        if (sceneTypeToLoad == "puzzle") {
+            //add injection for puzzle chances based on which have already been visited?
         }
-        int largest = 0;
-        for (int i = 0; i < myResult.Length; i++) {
-            if (myResult[i] > myResult[largest]) {
-                largest = i;
-            }
-        }
-        sceneTypeToLoad = mySceneTypes[largest];
 
         //then create an array with all of those scenes inside it, but remove the current scene
         int howManyOfType = 0;
@@ -45,15 +42,15 @@ public class OpenDoor : MonoBehaviour {
                 }
             }
         }
-        Debug.Log("Typesize: " + howManyOfType);
-        Debug.Log("All Scenesize: " + myScenes.Length);
+        //Debug.Log("Typesize: " + howManyOfType);
+        //Debug.Log("All Scenesize: " + myScenes.Length);
 
         //create an array of our current, narrowed down list of candidate scenes by type.
         int myCurrentArrayPoint = 0;
         string[] myTypeScenes = new string[howManyOfType];
         for (int i = 0; i < myScenes.Length; i++) {
             if (myScenes[i].Contains(sceneTypeToLoad.ToString())) {
-                Debug.Log(sceneTypeToLoad + " ?= " + myScenes[i]);
+                //Debug.Log(sceneTypeToLoad + " ?= " + myScenes[i]);
                 if (i != SceneManager.GetActiveScene().buildIndex) {
                     myTypeScenes[myCurrentArrayPoint] = myScenes[i];
                     myCurrentArrayPoint++;
@@ -96,6 +93,19 @@ public class OpenDoor : MonoBehaviour {
         if (!success) {
             Debug.LogError("No Scene Was Selected!");
         }
+    }
+    void TypeCalc() {
+        float[] myResult = new float[mySceneChances.Length];
+        for (int i = 0; i < mySceneChances.Length; i++) {
+            myResult[i] = Random.Range(0, mySceneChances.Length);
+        }
+        int largest = 0;
+        for (int i = 0; i < myResult.Length; i++) {
+            if (myResult[i] > myResult[largest]) {
+                largest = i;
+            }
+        }
+        sceneTypeToLoad = mySceneTypes[largest];
     }
 
     public void OnUse() {
