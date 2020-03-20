@@ -17,5 +17,6 @@ public class MainMenu : MonoBehaviour {
     private void OnDestroy() {
         player.SetActive(true);
         Destroy(lights);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }
