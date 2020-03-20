@@ -56,10 +56,13 @@ public class PlayerCrouchModified : MonoBehaviour {
             // Debug.Log("c_func 1");;
         }
         else {
-            if (currentCamera.transform.localPosition != myCameraPosition) {
-                currentCamera.transform.localPosition = Vector3.Lerp(currentCamera.transform.localPosition, myCameraPosition, 0.1f);
+            if (currentCamera.transform.localPosition != myCameraPosition && myCC.waitForCamera) {
+                currentCamera.transform.localPosition = Vector3.Lerp(currentCamera.transform.localPosition, myCameraPosition, 0.05f);
+                if (Vector3.SqrMagnitude(currentCamera.transform.localPosition - myCameraPosition) < 0.05f) {
+                    currentCamera.transform.localPosition = myCameraPosition;
+                }
             }
-            else {
+            if (!(currentCamera.transform.localPosition != myCameraPosition)) {
                 myCC.waitForCamera = false;
                 myCF.minVolMult = 1f;
                 myCF.maxVolMult = 1f;
