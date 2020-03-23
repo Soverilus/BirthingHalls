@@ -4,7 +4,15 @@ using UnityEngine;
 
 public class SetMyPositionToGameObject : MonoBehaviour {
     public GameObject myTarget;
+    public bool useTag = false;
+    public string myTag = "MainCamera";
+
     void Update() {
-        transform.position = myTarget.transform.position;
+        if (Camera.main) {
+            if (useTag && !myTarget) {
+                myTarget = GameObject.FindGameObjectWithTag(myTag);
+            }
+            transform.position = myTarget.transform.position;
+        }
     }
 }
