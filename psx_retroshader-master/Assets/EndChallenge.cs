@@ -5,6 +5,7 @@ using UnityEngine;
 public class EndChallenge : MonoBehaviour {
     public GameObject cake;
     GameObject player;
+    public GameObject scalePos;
 
     float oldDist;
     float newDist;
@@ -22,12 +23,14 @@ public class EndChallenge : MonoBehaviour {
             //lerp scale by the difference between the two
             myDifference = oldDist - newDist;
         }
-        transform.localScale = Vector3.Lerp(transform.localScale, TargetVector3(myDifference), 0.25f);
+        scalePos.transform.position = player.transform.position;
+        transform.localScale = Vector3.Lerp(transform.localScale, TargetVector3(myDifference), 0.1f);
         transform.localScale = new Vector3(
             Mathf.Clamp(transform.localScale.x, 0f, maxScale),
             Mathf.Clamp(transform.localScale.y, 0f, maxScale),
             Mathf.Clamp(transform.localScale.z, 0f, maxScale)
         );
+        player.transform.position = scalePos.transform.position;
         oldDist = newDist;
     }
 
