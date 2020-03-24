@@ -11,10 +11,16 @@ public class UseHandler : MonoBehaviour
     public float reach = 4.0F;
     [Tooltip("Choose the Layer the raycast will Hit.")]
     public LayerMask mask;
+    bool allowUse;
 
     private void Update() {
-        if (Input.GetAxisRaw("UseKey") > 0) {
+        if (Input.GetAxisRaw("UseKey") > 0 && allowUse) {
             OnPressUseKey();
+            allowUse = false;
+        }
+        if (Input.GetAxisRaw("UseKey") <= 0) {
+            allowUse = true;
+            Debug.Log("Can use again");
         }
     }
 
