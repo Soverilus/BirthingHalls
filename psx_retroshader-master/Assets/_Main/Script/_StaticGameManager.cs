@@ -44,6 +44,7 @@ public static class _StaticGameManager {
     public static class PlayerStats {
         public static bool keepLighter = false;
     }
+
     public static class Scenes {
         static int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
         public static string[] scenes { get; private set; }
@@ -59,6 +60,7 @@ public static class _StaticGameManager {
         public static float DoorsOpened { get; private set; }
         public static string DoorsOpenedString { get; private set; }
         static bool useCustomString = false;
+        public static int doorsUntilEnd { private set; get; } = 6;
 
         public static void _AddDoor() {
             DoorsOpened++;
@@ -75,6 +77,12 @@ public static class _StaticGameManager {
         public static void _UnsetDoorString() {
             useCustomString = false;
             DoorsOpenedString = DoorsOpened.ToString("F0");
+        }
+    }
+    public static void ChangeLayersRecursively(this Transform trans) {
+        trans.gameObject.layer = 0;
+        foreach (Transform child in trans) {
+            child.ChangeLayersRecursively();
         }
     }
 }

@@ -1,8 +1,11 @@
 fileFormatVersion: 2
-guid: 9ea2072bc0b8eeb48aa5a699acb2fce9
+guid: f00eaedf34341d04c9ce87ea4d232d9e
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -3999578356269874737
+    second: Cube|CubeAction
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -31,7 +34,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1

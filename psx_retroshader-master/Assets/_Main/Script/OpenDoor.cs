@@ -8,14 +8,16 @@ public class OpenDoor : MonoBehaviour {
     public string[] mySceneTypes = new string[2];
     [Range(0.01f, 1f)] public float[] mySceneChances;
 
-
     string[] myScenes;
     int sceneToLoad;
     string sceneTypeToLoad;
 
+    int randomDoorText;
+
     private void Start() {
         myScenes = _StaticGameManager.Scenes.scenes;
         WhichSceneToLoad();
+        randomDoorText = Random.Range(0, 10);
     }
 
     void WhichSceneToLoad() {
@@ -27,9 +29,23 @@ public class OpenDoor : MonoBehaviour {
         //First, get the scenetype to load
         //checks which type of scene to load.
         //Does this by checking which in a random.range is highest based on the Door's in-scene chances for a type.
-        TypeCalc();
-        if (sceneTypeToLoad == "puzzle") {
-            //add injection for puzzle chances based on which have already been visited?
+        if (_StaticGameManager.Doors.DoorsOpened >= _StaticGameManager.Doors.doorsUntilEnd) {
+            TypeCalc();
+        }
+        else {
+            sceneTypeToLoad = "end";
+        }
+
+        switch (sceneTypeToLoad) {
+            default:
+                break;
+            case "puzzle":
+                //add injection for puzzle chances based on which have already been visited?
+                break;
+
+            case "travel":
+
+                break;
         }
 
         //then create an array with all of those scenes inside it, but remove the current scene

@@ -39,6 +39,7 @@ public class LibraryPuzzle : MonoBehaviour {
         }
         else if (myCurrentPlace >= mySuccessInt && fail) {
             myCurrentPlace = 0;
+            fail = false;
             for (int i = 0; i < nonCritBooks.Length; i++) {
                 nonCritBooks[i].ResetBooks();
             }

@@ -20,7 +20,7 @@ public class UseHandler : MonoBehaviour
         }
         if (Input.GetAxisRaw("UseKey") <= 0) {
             allowUse = true;
-            Debug.Log("Can use again");
+            //Debug.Log("Can use again");
         }
     }
 
