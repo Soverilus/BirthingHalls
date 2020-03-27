@@ -29,7 +29,8 @@ public class OpenDoor : MonoBehaviour {
         //First, get the scenetype to load
         //checks which type of scene to load.
         //Does this by checking which in a random.range is highest based on the Door's in-scene chances for a type.
-        if (_StaticGameManager.Doors.DoorsOpened >= _StaticGameManager.Doors.doorsUntilEnd) {
+        if (_StaticGameManager.Doors.DoorsOpened < _StaticGameManager.Doors.doorsUntilEnd) {
+            //Debug.Log(_StaticGameManager.Doors.DoorsOpened + " is smaller than " + _StaticGameManager.Doors.doorsUntilEnd);
             TypeCalc();
         }
         else {
@@ -108,8 +109,10 @@ public class OpenDoor : MonoBehaviour {
 
         if (!success) {
             Debug.LogError("No Scene Was Selected!");
+            sceneToLoad = 1;
         }
     }
+
     void TypeCalc() {
         float[] myResult = new float[mySceneChances.Length];
         for (int i = 0; i < mySceneChances.Length; i++) {

@@ -14,6 +14,7 @@ public class EndChallenge : MonoBehaviour {
     float reductionSize;
 
     bool scaleDown = false;
+    bool waitFrame = true;
 
     float oldDist;
     float newDist;
@@ -38,40 +39,48 @@ public class EndChallenge : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (!scaleDown) {
-            roomScale = transform.lossyScale.sqrMagnitude / myOgScale.sqrMagnitude;
-            newDist = Vector3.Distance(player.transform.position, cake.transform.position);
-            if (newDist < oldDist) {
-                myDistance = Vector3.SqrMagnitude(cake.transform.position - player.transform.position);
-                //myScale = myDistance/(initialDistance*percentScale);
-                myScale = (myDistance / initialDistance) / roomScale;
-            }
+        if (!waitFrame) {
+            if (!scaleDown) {
+                roomScale = transform.lossyScale.sqrMagnitude / myOgScale.sqrMagnitude;
+                newDist = Vector3.Distance(player.transform.position, cake.transform.position);
+                if (newDist < oldDist) {
+                    myDistance = Vector3.SqrMagnitude(cake.transform.position - player.transform.position);
+                    //myScale = myDistance/(initialDistance*percentScale);
+                    myScale = (myDistance / initialDistance) / roomScale;
+                }
 
-            /*Debug.Log("myScale = " + myScale);
-            Debug.Log("initialDistance = " + initialDistance);
-            Debug.Log("myDistance = " + myDistance);
-            Debug.Log("roomScale = " + roomScale)*/
-            scalePos.transform.position = player.transform.position;
-            transform.localScale = Vector3.Lerp(targetScale, myOgScale, myScale);
-            //Debug.Log(transform.localScale + " and my distance is " + myDistance);
-            player.transform.position = scalePos.transform.position;
-            oldDist = newDist;
-            Debug.Log(transform.localScale.x + " " + maxScale);
-            if (transform.localScale.x >= maxScale - 1) {
-                
-                scaleDown = true;
-                Debug.Log(scaleDown);
-                myDownSizeTarget = transform.localScale;
+                /*Debug.Log("myScale = " + myScale);
+                Debug.Log("initialDistance = " + initialDistance);
+                Debug.Log("myDistance = " + myDistance);
+                Debug.Log("roomScale = " + roomScale)*/
+                scalePos.transform.position = player.transform.position;
+                transform.localScale = Vector3.Lerp(targetScale, myOgScale, myScale);
+                //Debug.Log(transform.localScale + " and my distance is " + myDistance);
+                player.transform.position = scalePos.transform.position;
+                oldDist = newDist;
+                Debug.Log(transform.localScale.x + " " + maxScale);
+                if (transform.localScale.x >= maxScale - 1) {
+
+                    scaleDown = true;
+                    Debug.Log(scaleDown);
+                    myDownSizeTarget = transform.localScale;
+                }
+            }
+            else {
+                scalePos.transform.position = player.transform.position;
+                tableScalePos.transform.position = table.transform.position;
+                transform.localScale = Vector3.Lerp(transform.localScale, myDownSizeTarget, 0.1f);
+                Debug.Log(myDownSizeTarget);
+                player.transform.position = scalePos.transform.position;
+                table.transform.position = tableScalePos.transform.position;
             }
         }
-        else {
-            scalePos.transform.position = player.transform.position;
-            tableScalePos.transform.position = table.transform.position;
-            transform.localScale = Vector3.Lerp(transform.localScale, myDownSizeTarget, 0.1f);
-            Debug.Log(myDownSizeTarget);
-            player.transform.position = scalePos.transform.position;
-            table.transform.position = tableScalePos.transform.position;
-        }
+        waitFrame = false;
+    }
+
+    IEnumerable WaitFrame() {
+        yield return new WaitForEndOfFrame();
+        waitFrame = false;
     }
 
     public void ScaleDown() {
