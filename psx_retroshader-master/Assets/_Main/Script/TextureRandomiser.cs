@@ -5,24 +5,33 @@ using UnityEngine;
 public class TextureRandomiser : MonoBehaviour
 {
     public MeshRenderer[] myMeshRenderers;
-    public Material[] myMaterials;
+    public Material[] myMainMaterials;
+    public Material[] myMiscMaterials;
     List<Material> myMaterialList = new List<Material>();
 
     void Start() {
         for (int i = 0; i < myMeshRenderers.Length; i++) {
-            myMeshRenderers[i].material = ReturnMaterial();
+            if (i == 0) {
+                myMeshRenderers[i].material = ReturnMaterial(true);
+            }
+            else {
+                myMeshRenderers[i].material = ReturnMaterial(false);
+            }
         }
     }
 
-    Material ReturnMaterial() {
+    Material ReturnMaterial(bool isMain) {
         Material resultMaterial = myMeshRenderers[0].material;
         //temporary thing for easier use
-        int m = Random.Range(0, myMaterials.Length);
-        resultMaterial = myMaterials[m];
-
-        for (int i = 0; i < myMaterials.Length; i++) {
-
+        if (isMain) {
+            int m = Random.Range(0, myMainMaterials.Length);
+            resultMaterial = myMainMaterials[m];
         }
+        else {
+            int m = Random.Range(0, myMiscMaterials.Length);
+            resultMaterial = myMiscMaterials[m];
+        }
+
         return resultMaterial;
     }
 }
