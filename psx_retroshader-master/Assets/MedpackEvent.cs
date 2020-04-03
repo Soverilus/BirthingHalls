@@ -5,7 +5,7 @@ using static _StaticGameManager;
 public class MedpackEvent : MonoBehaviour {
     private void Start() {
         float myChance = Random.Range(0, 1);
-        if (myChance < 0f) {
+        if (myChance < 0.75f) {
             Destroy(gameObject);
         }
     }
