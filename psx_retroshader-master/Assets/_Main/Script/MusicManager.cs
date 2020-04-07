@@ -2,12 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-public class MusicManager : MonoBehaviour {
+public class MusicManager : MonoBehaviour
+{
 
-    public AudioClip[] myClips { get; private set; }
-    AudioSource myMusicPlayer;
+    public AudioClip[] myClips;
+    AudioSource[] myMusicPlayers;
+
+    AudioSource MP1;
+    AudioSource MP2;
+
+    bool hasSwitched = false;
     void Start() {
-        myMusicPlayer = GetComponent<AudioSource>();
+        myMusicPlayers = new AudioSource[GetComponents<AudioSource>().Length];
+        myMusicPlayers = GetComponents<AudioSource>();
+        MP1 = myMusicPlayers[0];
+        MP2 = myMusicPlayers[1];
     }
 
     void Update() {
@@ -18,16 +27,30 @@ public class MusicManager : MonoBehaviour {
         for (int i = 0; i < myClips.Length; i++) {
             if (myClips[i].name == myClip) {
                 ChangeMusicFinal(myClips[i]);
-                    return;
+                return;
             }
         }
     }
 
     void ChangeMusicFinal(AudioClip clip) {
+        //use a coroutine to repeat the following in a synthetic update loop
+        //fade out the first clip
+        //fade in second clip
+        //once second clip is at 100, stop the first
+
+
         //do a nice fade effect or something.
         //for now just instantly switch em
-        myMusicPlayer.Stop();
-        myMusicPlayer.clip = clip;
-        myMusicPlayer.Play();
+        if (hasSwitched) {
+            MP2.Stop();
+            MP1.clip = clip;
+            MP1.Play();
+        }
+        else {
+            MP1.Stop();
+            MP2.clip = clip;
+            MP2.Play();
+        }
+        hasSwitched = !hasSwitched;
     }
 }
