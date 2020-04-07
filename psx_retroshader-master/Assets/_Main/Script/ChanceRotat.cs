@@ -6,7 +6,7 @@ public class ChanceRotat : MonoBehaviour
 {
     bool rotate = false;
     void Start() {
-        int i = Random.Range(0, 1);
+        int i = Random.Range(0, 10);
         if (i == 0) {
             StartCoroutine(WaitBeforeYouWeight());
         }

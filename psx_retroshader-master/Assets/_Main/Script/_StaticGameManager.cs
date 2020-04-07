@@ -69,7 +69,7 @@ public static class _StaticGameManager {
         public static float DoorsOpened { get; private set; }
         public static string DoorsOpenedString { get; private set; }
         static bool useCustomString = false;
-        public static int doorsUntilEnd { private set; get; } = 6;
+        public static int doorsUntilEnd { private set; get; } = 1;
 
         public static void _AddDoor() {
             DoorsOpened++;

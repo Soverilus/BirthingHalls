@@ -109,7 +109,12 @@ public class OpenDoor : MonoBehaviour {
 
         if (!success) {
             Debug.LogError("No Scene Was Selected!");
-            sceneToLoad = 1;
+            if (SceneManager.GetActiveScene().buildIndex == 1) {
+                sceneToLoad = 2;
+            }
+            else {
+                sceneToLoad = 1;
+            }
         }
     }
 

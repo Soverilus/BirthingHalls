@@ -54,7 +54,7 @@ public class EndChallenge : MonoBehaviour {
                 Debug.Log("myDistance = " + myDistance);
                 Debug.Log("roomScale = " + roomScale)*/
                 scalePos.transform.position = player.transform.position;
-                transform.localScale = Vector3.Lerp(targetScale, myOgScale, myScale);
+                transform.localScale = Vector3.Slerp(targetScale, myOgScale, myScale);
                 //Debug.Log(transform.localScale + " and my distance is " + myDistance);
                 player.transform.position = scalePos.transform.position;
                 oldDist = newDist;
