@@ -25,7 +25,7 @@ public class ChangeNameOnStart : MonoBehaviour {
     }
 
     void Start() {
-        Debug.Log(myPlayer.gameObject.name);
+        //Debug.Log(myPlayer.gameObject.name);
         name = "DDOL";
         doorText.text = "0";
     }

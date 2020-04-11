@@ -6,6 +6,7 @@ public class EndLights : MonoBehaviour
 {
     public GameObject[] myEm;
     ParticleSystem[] myPS;
+    public YouWin youWinPossible;
     int myLocation;
     int maxLocation;
     public EndChallenge myEC;
@@ -24,6 +25,10 @@ public class EndLights : MonoBehaviour
             myEm[myLocation].SetActive(true);
             myLocation++;
             myEC.ScaleDown();
+            
+        }
+        if (myLocation >= maxLocation) {
+            youWinPossible.endGamePossible = true;
         }
     }
 }

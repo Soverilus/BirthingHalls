@@ -58,7 +58,7 @@ public class EndChallenge : MonoBehaviour {
                 //Debug.Log(transform.localScale + " and my distance is " + myDistance);
                 player.transform.position = scalePos.transform.position;
                 oldDist = newDist;
-                Debug.Log(transform.localScale.x + " " + maxScale);
+                //Debug.Log(transform.localScale.x + " " + maxScale);
                 if (transform.localScale.x >= maxScale - 1) {
 
                     scaleDown = true;
@@ -70,7 +70,7 @@ public class EndChallenge : MonoBehaviour {
                 scalePos.transform.position = player.transform.position;
                 tableScalePos.transform.position = table.transform.position;
                 transform.localScale = Vector3.Lerp(transform.localScale, myDownSizeTarget, 0.1f);
-                Debug.Log(myDownSizeTarget);
+                //Debug.Log(myDownSizeTarget);
                 player.transform.position = scalePos.transform.position;
                 table.transform.position = tableScalePos.transform.position;
             }
