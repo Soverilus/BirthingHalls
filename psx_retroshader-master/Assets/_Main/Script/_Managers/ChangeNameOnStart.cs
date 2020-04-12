@@ -35,6 +35,10 @@ public class ChangeNameOnStart : MonoBehaviour {
         _StaticGameManager.EventParsing.EventParse();
     }
 
+    public void ParseDoorChange() {
+        doorText.text = _StaticGameManager.Doors.DoorsOpenedString;
+    }
+
     public void EventParser(string eventName) {
         Debug.Log("test");
         StartCoroutine(eventName);
@@ -49,6 +53,18 @@ public class ChangeNameOnStart : MonoBehaviour {
     IEnumerator MedKit() {
         myPlayer.AddComponent<MedKitEvent>();
         Debug.Log("Added MedKitEvent to " + gameObject.name);
+        yield return new WaitForSeconds(1);
+    }
+
+    IEnumerator DoorCounter() {
+        myPlayer.AddComponent<CounterEvent>();
+        Debug.Log("Added CounterEvent to " + gameObject.name);
+        yield return new WaitForSeconds(1);
+    }
+
+    IEnumerator StalkingEye() {
+        myPlayer.AddComponent<StalkerEvent>();
+        Debug.Log("Added StalkerEvent to " + gameObject.name);
         yield return new WaitForSeconds(1);
     }
 }

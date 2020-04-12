@@ -4,12 +4,14 @@ using UnityEngine;
 using System.Text.RegularExpressions;
 using UnityEngine.SceneManagement;
 
-public static class _StaticGameManager {
-    public static class EventParsing {
+public static class _StaticGameManager
+{
+    static ChangeNameOnStart myDDOL;
+    public static class EventParsing
+    {
         static Scene currentScene = SceneManager.GetSceneAt(0);
         public static List<string> eventList = new List<string>();
         public static List<int> eventListDuration = new List<int>();
-        static ChangeNameOnStart myDDOL;
 
         //need a way of telling how long an event is going to last. use regex on eventName with a variable to change each scene's start phase?
         public static void AddEvent(string eventName, int duration) {
@@ -23,7 +25,7 @@ public static class _StaticGameManager {
             Debug.Log("Inserted Duration for " + eventName + " of " + duration + " at eventlist index " + i);
             Debug.Log("CheckTest: Event = " + eventList[i] + " with a duration of " + eventListDuration[i]);
         }
-        
+
         static void ReduceEvent(string eventName) {
             int i = eventList.IndexOf(eventName);
             eventListDuration[i] = eventListDuration[i] - 1;
@@ -35,7 +37,7 @@ public static class _StaticGameManager {
         }
         public static void EventParse() {
             if (!myDDOL)
-            myDDOL = GameObject.FindGameObjectWithTag("Consistent").GetComponent<ChangeNameOnStart>();
+                myDDOL = GameObject.FindGameObjectWithTag("Consistent").GetComponent<ChangeNameOnStart>();
             for (int i = 0; i < eventList.Count; i++) {
                 myDDOL.EventParser(eventList[i]);
                 if (currentScene != SceneManager.GetActiveScene()) {
@@ -45,16 +47,14 @@ public static class _StaticGameManager {
             }
         }
     }
-    public static class AllEventNames {
-        //add strings to this manually to add events. Ask Matt for help with this, maybe others too.
-        public static string TestEvent = "TestEvent";
-    }
 
-    public static class PlayerStats {
+    public static class PlayerStats
+    {
         public static bool keepLighter = false;
     }
 
-    public static class Scenes {
+    public static class Scenes
+    {
         static int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
         public static string[] scenes { get; private set; }
 
@@ -65,7 +65,8 @@ public static class _StaticGameManager {
             }
         }
     }
-    public static class Doors {
+    public static class Doors
+    {
         public static float DoorsOpened { get; private set; }
         public static string DoorsOpenedString { get; private set; }
         static bool useCustomString = false;
@@ -73,14 +74,27 @@ public static class _StaticGameManager {
 
         public static void _AddDoor() {
             DoorsOpened++;
+            DoorStringCheck();
+        }
+
+        public static void _RemoveDoor() {
+            DoorsOpened--;
+            DoorStringCheck();
+        }
+
+        static void DoorStringCheck() {
             if (!useCustomString) {
                 DoorsOpenedString = DoorsOpened.ToString("F0");
             }
+            if (!myDDOL)
+                myDDOL = GameObject.FindGameObjectWithTag("Consistent").GetComponent<ChangeNameOnStart>();
+            myDDOL.ParseDoorChange();
         }
 
         public static void _SetDoorString(string myString) {
             useCustomString = true;
             DoorsOpenedString = myString;
+            DoorStringCheck();
         }
 
         public static void _UnsetDoorString() {
