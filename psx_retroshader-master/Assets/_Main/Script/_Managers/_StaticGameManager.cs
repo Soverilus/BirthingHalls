@@ -15,6 +15,11 @@ public static class _StaticGameManager
 
         //need a way of telling how long an event is going to last. use regex on eventName with a variable to change each scene's start phase?
         public static void AddEvent(string eventName, int duration) {
+            for (int f = 0; f < eventList.Count; f++) {
+                if (eventList[f] == eventName) {
+                    return;
+                }
+            }
             if (duration <= 0) {
                 duration = 1;
             }
@@ -30,6 +35,7 @@ public static class _StaticGameManager
             int i = eventList.IndexOf(eventName);
             eventListDuration[i] = eventListDuration[i] - 1;
             if (eventListDuration[i] <= 0) {
+                Debug.Log("Druation for event " + eventName + " has been reduced to " + eventListDuration[i]);
                 Debug.Log("Duration for event " + eventName + " has found to be lower or equal to 0, and is bieng removed");
                 eventListDuration.RemoveAt(i);
                 eventList.RemoveAt(i);
@@ -40,10 +46,12 @@ public static class _StaticGameManager
                 myDDOL = GameObject.FindGameObjectWithTag("Consistent").GetComponent<ChangeNameOnStart>();
             for (int i = 0; i < eventList.Count; i++) {
                 myDDOL.EventParser(eventList[i]);
-                if (currentScene != SceneManager.GetActiveScene()) {
-                    ReduceEvent(eventList[i]);
-                    currentScene = SceneManager.GetActiveScene();
                 }
+            if (currentScene != SceneManager.GetActiveScene()) {
+                for (int i = 0; i < eventList.Count; i++)
+                    ReduceEvent(eventList[i]);
+                Debug.Log("test");
+                currentScene = SceneManager.GetActiveScene();
             }
         }
     }
@@ -55,6 +63,7 @@ public static class _StaticGameManager
 
     public static class Scenes
     {
+        public static int LoseScene { get; private set; }
         static int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings;
         public static string[] scenes { get; private set; }
 
@@ -62,15 +71,19 @@ public static class _StaticGameManager
             scenes = new string[sceneCount];
             for (int i = 0; i < sceneCount; i++) {
                 scenes[i] = System.IO.Path.GetFileNameWithoutExtension(UnityEngine.SceneManagement.SceneUtility.GetScenePathByBuildIndex(i));
+                if (scenes[i] == "DEFEAT SCENE") {
+                    LoseScene = i;
+                }
             }
         }
     }
     public static class Doors
     {
+        public static bool stalker = false;
         public static float DoorsOpened { get; private set; }
         public static string DoorsOpenedString { get; private set; }
         static bool useCustomString = false;
-        public static int doorsUntilEnd { private set; get; } = 1;
+        public static int doorsUntilEnd { private set; get; } = 5;
 
         public static void _AddDoor() {
             DoorsOpened++;

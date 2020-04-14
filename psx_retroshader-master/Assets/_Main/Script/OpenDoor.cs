@@ -20,6 +20,10 @@ public class OpenDoor : MonoBehaviour {
         randomDoorText = Random.Range(0, 10);
     }
 
+    public void ReCalc() {
+        WhichSceneToLoad();
+    }
+
     void WhichSceneToLoad() {
         DoorCalc();
     }
@@ -31,7 +35,12 @@ public class OpenDoor : MonoBehaviour {
         //Does this by checking which in a random.range is highest based on the Door's in-scene chances for a type.
         if (_StaticGameManager.Doors.DoorsOpened < _StaticGameManager.Doors.doorsUntilEnd) {
             //Debug.Log(_StaticGameManager.Doors.DoorsOpened + " is smaller than " + _StaticGameManager.Doors.doorsUntilEnd);
-            TypeCalc();
+            if (!_StaticGameManager.Doors.stalker) {
+                TypeCalc();
+            }
+            else {
+                sceneTypeToLoad = "stalker";
+            }
         }
         else {
             sceneTypeToLoad = "end";

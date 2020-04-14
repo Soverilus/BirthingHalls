@@ -40,7 +40,7 @@ public class ChangeNameOnStart : MonoBehaviour {
     }
 
     public void EventParser(string eventName) {
-        Debug.Log("test");
+        //Debug.Log("test");
         StartCoroutine(eventName);
     }
 
@@ -51,19 +51,22 @@ public class ChangeNameOnStart : MonoBehaviour {
     }
 
     IEnumerator MedKit() {
+        if (!myPlayer.GetComponent<MedKitEvent>())
         myPlayer.AddComponent<MedKitEvent>();
         Debug.Log("Added MedKitEvent to " + gameObject.name);
         yield return new WaitForSeconds(1);
     }
 
     IEnumerator DoorCounter() {
-        myPlayer.AddComponent<CounterEvent>();
+        if (!myPlayer.GetComponent<CounterEvent>())
+            myPlayer.AddComponent<CounterEvent>();
         Debug.Log("Added CounterEvent to " + gameObject.name);
         yield return new WaitForSeconds(1);
     }
 
     IEnumerator StalkingEye() {
-        myPlayer.AddComponent<StalkerEvent>();
+        if (!myPlayer.GetComponent<StalkerEvent>())
+            myPlayer.AddComponent<StalkerEvent>();
         Debug.Log("Added StalkerEvent to " + gameObject.name);
         yield return new WaitForSeconds(1);
     }

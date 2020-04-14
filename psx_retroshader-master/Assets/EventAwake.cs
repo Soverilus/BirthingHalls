@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EventAwake : MonoBehaviour
 {
-
     private void Start() {
         //myEvent, myMaxChance, minDuration, maxDuration:
 
@@ -15,8 +14,9 @@ public class EventAwake : MonoBehaviour
          * maxDuration = the maximum amount of time (measured in scenes) that the event will last.
         */
 
-        AddEventParse("DoorCounter", 3, 0, 4);
-        AddEventParse("StalkingEye", 5, 2, 20);
+        AddEventParse("DoorCounter", 10, 0, 4);
+        AddEventParse("StalkingEye", 1, 2, 20);
+        _StaticGameManager.EventParsing.EventParse();
         
     }
 

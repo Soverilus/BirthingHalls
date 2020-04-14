@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class EventHolder : MonoBehaviour
 {
-
+    protected virtual void Start() {
+        EventParse();
+    }
     public void EventParse() {
         Event();
         Debug.Log("successfully added " + gameObject.GetComponent(typeof (EventHolder)));

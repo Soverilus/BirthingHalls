@@ -28,7 +28,7 @@ public class CounterEvent : EventHolder
         doorString = "";
         for (int i = 0; i < charAmount; i++) {
             doorString += glyphs[Random.Range(0, glyphs.Length)];
-            Debug.Log(doorString);
+            //Debug.Log(doorString);
         }
     }
 
