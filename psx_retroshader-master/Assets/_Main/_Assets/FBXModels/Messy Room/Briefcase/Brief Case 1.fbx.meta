@@ -1,8 +1,26 @@
 fileFormatVersion: 2
-guid: b3c770f1ba4241b4c88cfaa852238294
+guid: 412e24b81d0c5bd418e4c2fd81ab196f
 ModelImporter:
   serializedVersion: 19300
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 9036694105013053538
+    second: Cube|Cube.001Action
+  - first:
+      74: -1456525249475375426
+    second: Cube|Cube.001Action.001
+  - first:
+      74: -3999578356269874737
+    second: Cube|CubeAction
+  - first:
+      74: -8515560403302317629
+    second: Cube.001|Cube.001Action
+  - first:
+      74: -4064532029014869935
+    second: Cube.001|Cube.001Action.001
+  - first:
+      74: 17017395923089283
+    second: Cube.001|CubeAction
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -31,7 +49,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
