@@ -1,0 +1,20 @@
+--DISTORTED TRACK--
+plays when an event (glitches & such) occur
+
+--FOLEY--
+Damage plays when player makes contact with prowling monster
+Door sounds play when entering and leaving a level
+Footsteps are footsteps... you know where they go
+Lighter sounds are self explanitory too. Flick is for trying to light it
+
+--FREEDOM TRACK--
+plays when player enters the end room and is approaching the cake at the end of the hall
+When cake is lit play the damage track (from foley) and then 'crash' the game
+
+--MENU MUSIC--
+plays in the menu (and perhaps start room?)
+
+--OMINOUS TRACK--
+plays across the entire game. Part 1 moves to part 2. Part 2 loops until first puzzle is completed
+part 3 starts after puzzle 1 is completed. part 4 plays when the player is being chased by the
+prowling monster.
