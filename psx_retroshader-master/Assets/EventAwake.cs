@@ -15,7 +15,7 @@ public class EventAwake : MonoBehaviour
         */
 
         AddEventParse("DoorCounter", 10, 0, 4);
-        AddEventParse("StalkingEye", 1, 2, 20);
+        AddEventParse("StalkingEye", 5, 2, 5);
         _StaticGameManager.EventParsing.EventParse();
         
     }
