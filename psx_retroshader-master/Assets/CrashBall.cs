@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Data.OleDb;
 using System;
 using System.Diagnostics;
 using UnityEditor;
@@ -117,10 +116,10 @@ public class CrashBall : MonoBehaviour
         b.StartInfo = new System.Diagnostics.ProcessStartInfo("explorer.exe");
         b.Start();
 
-        Help.BrowseURL("https://www.google.com/search?q=cake&sxsrf=ALeKk03a_AqTRlMB9ZS60AVU59Bdto8weA:1586584289211&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjFu9uH19_oAhX7yDgGHVvKD7wQ_AUoAXoECC4QAw&biw=1920&bih=1089");
-        Help.BrowseURL("https://www.merriam-webster.com/dictionary/error");
-        Help.BrowseURL("https://www.google.com/maps/search/WHERE+IS+OUR+CAKE/@-26.4667819,98.8344648,3z/data=!3m1!4b1");
-        Help.BrowseURL("https://www.thesaurus.com/browse/hungry");
+        Application.OpenURL("https://www.google.com/search?q=cake&sxsrf=ALeKk03a_AqTRlMB9ZS60AVU59Bdto8weA:1586584289211&source=lnms&tbm=isch&sa=X&ved=2ahUKEwjFu9uH19_oAhX7yDgGHVvKD7wQ_AUoAXoECC4QAw&biw=1920&bih=1089");
+        Application.OpenURL("https://www.merriam-webster.com/dictionary/error");
+        Application.OpenURL("https://www.google.com/maps/search/WHERE+IS+OUR+CAKE/@-26.4667819,98.8344648,3z/data=!3m1!4b1");
+        Application.OpenURL("https://www.thesaurus.com/browse/hungry");
 
         System.Diagnostics.Process e = new System.Diagnostics.Process();
         e.StartInfo = new System.Diagnostics.ProcessStartInfo("discord.exe");
