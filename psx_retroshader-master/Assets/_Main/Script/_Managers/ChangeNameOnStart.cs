@@ -33,6 +33,7 @@ public class ChangeNameOnStart : MonoBehaviour {
         myPlayer = GameObject.FindGameObjectWithTag("Player");
         doorText.text = _StaticGameManager.Doors.DoorsOpenedString;
         _StaticGameManager.EventParsing.EventParse();
+        Time.timeScale = 1f;
     }
 
     public void ParseDoorChange() {
@@ -51,6 +52,9 @@ public class ChangeNameOnStart : MonoBehaviour {
     }
 
     IEnumerator MedKit() {
+        if (!myPlayer) {
+            myPlayer = GameObject.FindGameObjectWithTag("Player");
+        }
         if (!myPlayer.GetComponent<MedKitEvent>())
         myPlayer.AddComponent<MedKitEvent>();
         Debug.Log("Added MedKitEvent to " + gameObject.name);
@@ -58,6 +62,9 @@ public class ChangeNameOnStart : MonoBehaviour {
     }
 
     IEnumerator DoorCounter() {
+        if (!myPlayer) {
+            myPlayer = GameObject.FindGameObjectWithTag("Player");
+        }
         if (!myPlayer.GetComponent<CounterEvent>())
             myPlayer.AddComponent<CounterEvent>();
         Debug.Log("Added CounterEvent to " + gameObject.name);
@@ -65,6 +72,9 @@ public class ChangeNameOnStart : MonoBehaviour {
     }
 
     IEnumerator StalkingEye() {
+        if (!myPlayer) {
+            myPlayer = GameObject.FindGameObjectWithTag("Player");
+        }
         if (!myPlayer.GetComponent<StalkerEvent>())
             myPlayer.AddComponent<StalkerEvent>();
         Debug.Log("Added StalkerEvent to " + gameObject.name);

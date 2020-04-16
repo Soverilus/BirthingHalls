@@ -6,6 +6,8 @@ public class LighterFlicker : MonoBehaviour {
     bool lightAttempt = false;
     bool lightEnabled = false;
 
+    public bool lagTest = true;
+
     public GameObject lighterObject;
     int attemptNo;
     public int attemptMax;
@@ -53,6 +55,10 @@ public class LighterFlicker : MonoBehaviour {
     }
 
     void LightIntensity() {
+        if (lagTest) {
+            //myLight.intensity = baseIntensity;
+            return;
+        }
         float targetIntensity = myIntensity - Random.Range(0, baseIntensity * percentFlicker);
         myLight.intensity = Mathf.Clamp(Mathf.Lerp(myLight.intensity, targetIntensity, percentFlickerSpeed), 0, baseIntensity);
         Color colorTarget = Color.Lerp(myColor, targetColor, Random.Range(0, colorFlicker));
