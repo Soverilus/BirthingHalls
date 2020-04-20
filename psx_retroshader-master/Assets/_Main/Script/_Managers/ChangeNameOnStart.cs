@@ -8,8 +8,13 @@ public class ChangeNameOnStart : MonoBehaviour {
     Canvas myCanvas;
     public Text doorText;
     GameObject myPlayer;
+    AudioSource[] myAS;
+    public Renderer myFadePanel;
+    Color FadedOut = Color.black;
+    Color FadedIn = Color.clear;
+    float fadeFloat;
     private void Awake() {
-        
+        myAS = GetComponents<AudioSource>();
         if (GameObject.FindGameObjectWithTag("Consistent")) {
             GameObject[] myObjects = GameObject.FindGameObjectsWithTag("Consistent");
             for (int i = 0; i < myObjects.Length; i++) {
@@ -28,12 +33,38 @@ public class ChangeNameOnStart : MonoBehaviour {
         //Debug.Log(myPlayer.gameObject.name);
         name = "DDOL";
         doorText.text = "0";
+        StartCoroutine(FadeIn());
     }
     private void OnLevelWasLoaded(int level) {
         myPlayer = GameObject.FindGameObjectWithTag("Player");
         doorText.text = _StaticGameManager.Doors.DoorsOpenedString;
         _StaticGameManager.EventParsing.EventParse();
         Time.timeScale = 1f;
+        if (level != 0) {
+            myAS[0].Play();
+            StartCoroutine(FadeIn());
+        }
+    }
+
+    public void PlayOpenDoor() {
+        myAS[1].Play();
+    }
+    IEnumerator FadeIn() {
+        myFadePanel.material.color = Color.Lerp(FadedOut, FadedIn, fadeFloat);
+        yield return new WaitForEndOfFrame();
+        if (myFadePanel.material.color.a > FadedIn.a) {
+            StartCoroutine(FadeIn());
+            fadeFloat = Mathf.Clamp(fadeFloat + 0.001f, 0f, 1f);
+        }
+    }
+
+    public IEnumerator FadeOut() {
+        myFadePanel.material.color = Color.Lerp(FadedOut, FadedIn, fadeFloat);
+        yield return new WaitForEndOfFrame();
+        if (myFadePanel.material.color.a > FadedIn.a) {
+            StartCoroutine(FadeOut());
+            fadeFloat = Mathf.Clamp(fadeFloat - 0.001f, 0f, 1f);
+        }
     }
 
     public void ParseDoorChange() {

@@ -6,9 +6,26 @@ using UnityEngine.SceneManagement;
 
 public static class _StaticGameManager
 {
+    
     static ChangeNameOnStart myDDOL;
+    static public void FadeOut() {
+        if (!myDDOL) {
+            FindDDOL();
+        }
+        myDDOL.StartCoroutine("FadeOut");
+        myDDOL.PlayOpenDoor();
+    }
+    static public float GetFadeAmount() {
+        return myDDOL.myFadePanel.material.color.a;
+    }
+
+    static public void FindDDOL() {
+        myDDOL = myDDOL = GameObject.FindGameObjectWithTag("Consistent").GetComponent<ChangeNameOnStart>();
+    }
     public static class EventParsing
     {
+
+        
         static Scene currentScene = SceneManager.GetSceneAt(0);
         public static List<string> eventList = new List<string>();
         public static List<int> eventListDuration = new List<int>();
@@ -42,8 +59,9 @@ public static class _StaticGameManager
             }
         }
         public static void EventParse() {
-            if (!myDDOL)
-                myDDOL = GameObject.FindGameObjectWithTag("Consistent").GetComponent<ChangeNameOnStart>();
+            if (!myDDOL) {
+                FindDDOL();
+            }
             for (int i = 0; i < eventList.Count; i++) {
                 myDDOL.EventParser(eventList[i]);
                 }
@@ -53,6 +71,13 @@ public static class _StaticGameManager
                 Debug.Log("test");
                 currentScene = SceneManager.GetActiveScene();
             }
+        }
+        static public bool ContainsEvent(string name) {
+            bool b = false;
+            if (eventList.Contains(name)) {
+                b = true;
+            }
+            return b;
         }
     }
 
@@ -99,8 +124,9 @@ public static class _StaticGameManager
             if (!useCustomString) {
                 DoorsOpenedString = DoorsOpened.ToString("F0");
             }
-            if (!myDDOL)
-                myDDOL = GameObject.FindGameObjectWithTag("Consistent").GetComponent<ChangeNameOnStart>();
+            if (!myDDOL) {
+                FindDDOL();
+            }
             myDDOL.ParseDoorChange();
         }
 

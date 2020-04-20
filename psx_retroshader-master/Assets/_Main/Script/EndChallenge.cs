@@ -11,11 +11,15 @@ public class EndChallenge : MonoBehaviour {
     Vector3 myDownSizeTarget;
     int targetDownsizeInt = 9;
 
+    AudioSource myAS;
+    bool AudioStart = false;
+
     float reductionSize;
 
     bool scaleDown = false;
     bool waitFrame = true;
 
+    
     float oldDist;
     float newDist;
     public float maxScale;
@@ -27,6 +31,7 @@ public class EndChallenge : MonoBehaviour {
     float roomScale;
     float percentScale;
     void Start() {
+        myAS = GetComponent<AudioSource>();
         player = GameObject.FindGameObjectWithTag("Player");
         oldDist = Vector3.Distance(player.transform.position, cake.transform.position);
         myOgScale = transform.localScale;
@@ -34,11 +39,16 @@ public class EndChallenge : MonoBehaviour {
         reductionSize = table.GetComponent<Collider>().bounds.size.magnitude;
 
         //Debug.Log("roomscale = " + roomScale);
-        initialDistance = Vector3.SqrMagnitude(cake.transform.position - player.transform.position);
+        initialDistance = Vector3.SqrMagnitude(table.transform.position - player.transform.position);
     }
 
     // Update is called once per frame
     void Update() {
+        RoomSizeChange();
+        AudioChange();
+    }
+
+    void RoomSizeChange() {
         if (!waitFrame) {
             if (!scaleDown) {
                 roomScale = transform.lossyScale.sqrMagnitude / myOgScale.sqrMagnitude;
@@ -46,6 +56,7 @@ public class EndChallenge : MonoBehaviour {
                 if (newDist < oldDist) {
                     myDistance = Vector3.SqrMagnitude(cake.transform.position - player.transform.position);
                     //myScale = myDistance/(initialDistance*percentScale);
+                    //initialDistance = initialDistance * myScale;
                     myScale = (myDistance / initialDistance) / roomScale;
                 }
 
@@ -67,7 +78,12 @@ public class EndChallenge : MonoBehaviour {
                 }
             }
             else {
-                scalePos.transform.position = player.transform.position;
+                newDist = Vector3.Distance(player.transform.position, cake.transform.position);
+                if (newDist < oldDist) {
+                    myDistance = Vector3.SqrMagnitude(cake.transform.position - player.transform.position);
+                    oldDist = newDist;
+                }
+                    scalePos.transform.position = player.transform.position;
                 tableScalePos.transform.position = table.transform.position;
                 transform.localScale = Vector3.Lerp(transform.localScale, myDownSizeTarget, 0.1f);
                 //Debug.Log(myDownSizeTarget);
@@ -76,6 +92,12 @@ public class EndChallenge : MonoBehaviour {
             }
         }
         waitFrame = false;
+    }
+    void AudioChange() {
+        //if (AudioStart) {
+            myAS.pitch = Mathf.Clamp(Mathf.Lerp(1f, 0f, myDistance / initialDistance), 0.01f, 1f);
+            myAS.volume = Mathf.Clamp(Mathf.Lerp(1f, 0f, myDistance / initialDistance), 0.01f, 1f);
+        //}
     }
 
     IEnumerable WaitFrame() {

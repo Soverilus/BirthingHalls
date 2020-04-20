@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using System.Text.RegularExpressions;
 
 public class OpenDoor : MonoBehaviour {
+    bool used = false;
     public string[] mySceneTypes = new string[2];
     [Range(0.01f, 1f)] public float[] mySceneChances;
 
@@ -18,6 +19,15 @@ public class OpenDoor : MonoBehaviour {
         myScenes = _StaticGameManager.Scenes.scenes;
         WhichSceneToLoad();
         randomDoorText = Random.Range(0, 10);
+    }
+
+    private void Update() {
+        if (used) {
+            if (_StaticGameManager.GetFadeAmount() <= 0f) {
+                _StaticGameManager.Doors._AddDoor();
+                SceneManager.LoadScene(sceneToLoad);
+            }
+        }
     }
 
     public void ReCalc() {
@@ -142,8 +152,10 @@ public class OpenDoor : MonoBehaviour {
     }
 
     public void OnUse() {
-        _StaticGameManager.Doors._AddDoor();
-        SceneManager.LoadScene(sceneToLoad);
+        if (!used) {
+            _StaticGameManager.FadeOut();
+            used = true;
+        }
     }
 /*
     void OldSceneCalc() {

@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.Audio;
 public class MusicManager : MonoBehaviour
 {
-
+/*
     public AudioClip[] myClips;
     AudioSource[] myMusicPlayers;
 
     AudioSource MP1;
     AudioSource MP2;
+
+    AudioClip mainClip;
+    AudioClip myCurrent;
 
     bool hasSwitched = false;
     void Start() {
@@ -17,6 +20,12 @@ public class MusicManager : MonoBehaviour
         myMusicPlayers = GetComponents<AudioSource>();
         MP1 = myMusicPlayers[0];
         MP2 = myMusicPlayers[1];
+        MP1.volume = 0f;
+        MP2.volume = 0f;
+        mainClip = myClips[0];
+        MP1.clip = mainClip;
+        myCurrent = myClips[0];
+        MP2.clip = myClips[1];
     }
 
     void Update() {
@@ -52,5 +61,5 @@ public class MusicManager : MonoBehaviour
             MP2.Play();
         }
         hasSwitched = !hasSwitched;
-    }
+    }*/
 }
