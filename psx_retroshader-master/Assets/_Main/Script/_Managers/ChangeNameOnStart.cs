@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeNameOnStart : MonoBehaviour {
+public class ChangeNameOnStart : MonoBehaviour
+{
 
     Canvas myCanvas;
     public Text doorText;
@@ -41,20 +42,23 @@ public class ChangeNameOnStart : MonoBehaviour {
         _StaticGameManager.EventParsing.EventParse();
         Time.timeScale = 1f;
         if (level != 0) {
+            Debug.Log("Played Door Open Sound");
             myAS[0].Play();
             StartCoroutine(FadeIn());
         }
     }
 
     public void PlayOpenDoor() {
+        Debug.Log("Played Door close Sound");
         myAS[1].Play();
+        StartCoroutine(FadeOut());
     }
     IEnumerator FadeIn() {
         myFadePanel.material.color = Color.Lerp(FadedOut, FadedIn, fadeFloat);
         yield return new WaitForEndOfFrame();
         if (myFadePanel.material.color.a > FadedIn.a) {
+            fadeFloat = Mathf.Clamp(fadeFloat + 0.01f, 0f, 1f);
             StartCoroutine(FadeIn());
-            fadeFloat = Mathf.Clamp(fadeFloat + 0.001f, 0f, 1f);
         }
     }
 
@@ -62,8 +66,8 @@ public class ChangeNameOnStart : MonoBehaviour {
         myFadePanel.material.color = Color.Lerp(FadedOut, FadedIn, fadeFloat);
         yield return new WaitForEndOfFrame();
         if (myFadePanel.material.color.a > FadedIn.a) {
+            fadeFloat = Mathf.Clamp(fadeFloat - 0.01f, 0f, 1f);
             StartCoroutine(FadeOut());
-            fadeFloat = Mathf.Clamp(fadeFloat - 0.001f, 0f, 1f);
         }
     }
 
@@ -87,7 +91,7 @@ public class ChangeNameOnStart : MonoBehaviour {
             myPlayer = GameObject.FindGameObjectWithTag("Player");
         }
         if (!myPlayer.GetComponent<MedKitEvent>())
-        myPlayer.AddComponent<MedKitEvent>();
+            myPlayer.AddComponent<MedKitEvent>();
         Debug.Log("Added MedKitEvent to " + gameObject.name);
         yield return new WaitForSeconds(1);
     }
