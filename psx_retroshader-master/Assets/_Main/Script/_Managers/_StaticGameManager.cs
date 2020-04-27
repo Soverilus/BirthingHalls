@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public static class _StaticGameManager
 {
-    
+
     static ChangeNameOnStart myDDOL;
     static public void FadeOut() {
         if (!myDDOL) {
@@ -24,8 +24,6 @@ public static class _StaticGameManager
     }
     public static class EventParsing
     {
-
-        
         static Scene currentScene = SceneManager.GetSceneAt(0);
         public static List<string> eventList = new List<string>();
         public static List<int> eventListDuration = new List<int>();
@@ -64,7 +62,7 @@ public static class _StaticGameManager
             }
             for (int i = 0; i < eventList.Count; i++) {
                 myDDOL.EventParser(eventList[i]);
-                }
+            }
             if (currentScene != SceneManager.GetActiveScene()) {
                 for (int i = 0; i < eventList.Count; i++)
                     ReduceEvent(eventList[i]);

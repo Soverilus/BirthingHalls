@@ -16,6 +16,7 @@ public class CrashBall : MonoBehaviour
     public IEnumerator CrashToDesktop(string myCrashText, string myCapText, float time, WindowType type) {
         yield return new WaitForSecondsRealtime(time);
         NativeWinAlert.PopUp(myCrashText, myCapText, type);
+        Cursor.lockState = CursorLockMode.Confined;
         UnityEngine.Debug.LogError("Application tried to Quit, run this in a full build!");
         Application.Quit();
         
@@ -37,6 +38,7 @@ public class CrashBall : MonoBehaviour
 
     }
     IEnumerator DoTheThing0() {
+        Cursor.lockState = CursorLockMode.Confined;
         NativeWinAlert.PopUp("You Lose", "No Cake For You", WindowType.Error);
         myCam.farClipPlane = 20f;
         Time.timeScale = 1f;
@@ -45,28 +47,29 @@ public class CrashBall : MonoBehaviour
     }
 
     IEnumerator DoTheThing1() {
+        Cursor.lockState = CursorLockMode.Confined;
         NativeWinAlert.PopUp("No Win", "HahaHaHahAhAha", WindowType.Error);
         myCam.farClipPlane = 35f;
         yield return new WaitForSeconds(1f);
         StartCoroutine(DoTheThing2());
     }
     IEnumerator DoTheThing2() {
-
+        Cursor.lockState = CursorLockMode.Confined;
         NativeWinAlert.PopUp("You've only opened " + _StaticGameManager.Doors.DoorsOpened + " doors!", "We caught you", WindowType.Info);
         myCam.farClipPlane = 65f;
         yield return new WaitForSeconds(1f);
         StartCoroutine(DoTheThing3());
     }
     IEnumerator DoTheThing3() {
-
+        Cursor.lockState = CursorLockMode.Confined;
         NativeWinAlert.PopUp("Where have you hidden your cake, hmm?", "We'll Find it", WindowType.Info);
         myCam.farClipPlane = 105f;
         yield return new WaitForSeconds(1f);
         StartCoroutine(DoTheThing4());
     }
     IEnumerator DoTheThing4() {
+        Cursor.lockState = CursorLockMode.Confined;
         NativeWinAlert.PopUp("It'll be ours eventually", "We'll eat it", WindowType.Warning);
-
         haveRanErrors = true;
         StartCoroutine(EyeSmile());
         yield return new WaitForEndOfFrame();
