@@ -70,6 +70,9 @@ public class OpenDoor : MonoBehaviour {
 
         //then create an array with all of those scenes inside it, but remove the current scene
         int howManyOfType = 0;
+        if (myScenes == null) { 
+            myScenes = _StaticGameManager.Scenes.scenes; 
+        }
         for (int i = 0; i < myScenes.Length; i++) {
             if (myScenes[i].Contains(sceneTypeToLoad.ToString())) {
                 howManyOfType++;

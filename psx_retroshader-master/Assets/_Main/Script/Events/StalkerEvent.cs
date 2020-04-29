@@ -14,7 +14,7 @@ public class StalkerEvent : EventHolder
         _StaticGameManager.Doors.stalker = true;
         _StaticGameManager.EventParsing.AddEvent("DoorCounter", 1);
         mySt = GameObject.FindGameObjectsWithTag("Stalker");
-        Debug.Log(mySt);
+        //Debug.Log(mySt);
         myDoors = GameObject.FindGameObjectsWithTag("Door");
         myDScripts = new OpenDoor[myDoors.Length];
         myLights = new Light[mySt.Length];
@@ -37,11 +37,13 @@ public class StalkerEvent : EventHolder
     void StalkerMove() {
         float oldDist = 100f;
         for (int i = 0; i < mySt.Length; i++) {
-            mySt[i].transform.position = Vector3.Slerp(mySt[i].transform.position, transform.position,  0.001f);
-            //Debug.Log(Vector3.Magnitude(mySt[i].transform.position - transform.position));
-            if (myDist < oldDist) {
-                myDist = Vector3.Magnitude(mySt[i].transform.position - transform.position);
-                oldDist = myDist;
+            if (mySt[i]) {
+                mySt[i].transform.position = Vector3.Slerp(mySt[i].transform.position, transform.position, 0.001f);
+                //Debug.Log(Vector3.Magnitude(mySt[i].transform.position - transform.position));
+                if (myDist < oldDist) {
+                    myDist = Vector3.Magnitude(mySt[i].transform.position - transform.position);
+                    oldDist = myDist;
+                }
             }
             if (myDist <= 12f) {
                 Time.timeScale = Mathf.Clamp(myDist/5f, 0.25f, 1f);

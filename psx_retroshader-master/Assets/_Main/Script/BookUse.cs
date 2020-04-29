@@ -38,14 +38,14 @@ public class BookUse : MonoBehaviour
     private void FixedUpdate() {
         if (used) {
             if (Vector3.Magnitude(myOriginalPosition-transform.position) < distance) {
-                Debug.Log(gameObject.name + " Is moving");
+                //Debug.Log(gameObject.name + " Is moving");
                 if (myCol.enabled) {
                     myCol.enabled = false;
                 }
                 transform.localPosition = Vector3.Lerp(transform.localPosition, transform.localPosition + transform.right, 0.1f);
             }
             if (Vector3.Magnitude(myOriginalPosition - transform.position) >= distance && myRB.isKinematic) {
-                Debug.Log(gameObject.name + " has finished moving and will now become a rigidbody");
+                //Debug.Log(gameObject.name + " has finished moving and will now become a rigidbody");
                 myCol.enabled = true;
                 myRB.isKinematic = false;
                 myParent.OnBookUse(me);

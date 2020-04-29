@@ -39,23 +39,24 @@ public static class _StaticGameManager
                 duration = 1;
             }
             eventList.Add(eventName);
-            Debug.Log("Added event " + eventName);
+            //Debug.Log("Added event " + eventName);
             int i = eventList.IndexOf(eventName);
             eventListDuration.Insert(i, duration);
-            Debug.Log("Inserted Duration for " + eventName + " of " + duration + " at eventlist index " + i);
-            Debug.Log("CheckTest: Event = " + eventList[i] + " with a duration of " + eventListDuration[i]);
+            //Debug.Log("Inserted Duration for " + eventName + " of " + duration + " at eventlist index " + i);
+            //Debug.Log("CheckTest: Event = " + eventList[i] + " with a duration of " + eventListDuration[i]);
         }
 
         static void ReduceEvent(string eventName) {
             int i = eventList.IndexOf(eventName);
             eventListDuration[i] = eventListDuration[i] - 1;
             if (eventListDuration[i] <= 0) {
-                Debug.Log("Druation for event " + eventName + " has been reduced to " + eventListDuration[i]);
-                Debug.Log("Duration for event " + eventName + " has found to be lower or equal to 0, and is bieng removed");
+                //Debug.Log("Druation for event " + eventName + " has been reduced to " + eventListDuration[i]);
+                //Debug.Log("Duration for event " + eventName + " has found to be lower or equal to 0, and is bieng removed");
                 eventListDuration.RemoveAt(i);
                 eventList.RemoveAt(i);
             }
         }
+
         public static void EventParse() {
             if (!myDDOL) {
                 FindDDOL();
@@ -66,7 +67,7 @@ public static class _StaticGameManager
             if (currentScene != SceneManager.GetActiveScene()) {
                 for (int i = 0; i < eventList.Count; i++)
                     ReduceEvent(eventList[i]);
-                Debug.Log("test");
+                //Debug.Log("test");
                 currentScene = SceneManager.GetActiveScene();
             }
         }
@@ -104,9 +105,11 @@ public static class _StaticGameManager
     {
         public static bool stalker = false;
         public static float DoorsOpened { get; private set; }
+
+        public static float DoorsOpenedTwo;
         public static string DoorsOpenedString { get; private set; }
         static bool useCustomString = false;
-        public static int doorsUntilEnd { private set; get; } = 5;
+        public static int doorsUntilEnd { get; private set; } = 9;
 
         public static void _AddDoor() {
             DoorsOpened++;
@@ -119,6 +122,7 @@ public static class _StaticGameManager
         }
 
         static void DoorStringCheck() {
+            DoorsOpenedTwo = DoorsOpened;
             if (!useCustomString) {
                 DoorsOpenedString = DoorsOpened.ToString("F0");
             }

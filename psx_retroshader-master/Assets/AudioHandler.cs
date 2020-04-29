@@ -25,6 +25,7 @@ public class AudioHandler : MonoBehaviour
 
     public void FadeIn() {
         if (!fadingIn) {
+            fadingOut = false;
             fadingIn = true;
             StartCoroutine(FadeInEnum());
         }
@@ -44,6 +45,7 @@ public class AudioHandler : MonoBehaviour
 
     public void FadeOut() {
         if (!fadingOut) {
+            fadingIn = false;
             fadingOut = true;
             StartCoroutine(FadeOutEnum());
         }

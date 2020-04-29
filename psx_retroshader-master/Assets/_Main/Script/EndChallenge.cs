@@ -44,8 +44,10 @@ public class EndChallenge : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        RoomSizeChange();
-        AudioChange();
+        if (player) {
+            RoomSizeChange();
+            AudioChange();
+        }
     }
 
     void RoomSizeChange() {

@@ -35,7 +35,7 @@ public class CounterEvent : EventHolder
     private IEnumerator SetDoorStringRepeating() {
         SetDoorString();
         _StaticGameManager.Doors._SetDoorString(doorString);
-        Debug.Log(doorString);
+        //Debug.Log(doorString);
         yield return new WaitForSecondsRealtime(Random.Range(0.5f, 2f));
         StartCoroutine(SetDoorStringRepeating());
     }

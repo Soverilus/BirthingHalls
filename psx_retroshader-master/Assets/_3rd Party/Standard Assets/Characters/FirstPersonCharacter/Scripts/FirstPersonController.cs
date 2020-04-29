@@ -56,6 +56,7 @@ namespace UnityStandardAssets.Characters.FirstPerson {
             realRunSpeed = m_RunSpeed;
             realJumpSpeed = m_JumpSpeed;
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
             m_OriginalCameraPosition = m_Camera.transform.localPosition;

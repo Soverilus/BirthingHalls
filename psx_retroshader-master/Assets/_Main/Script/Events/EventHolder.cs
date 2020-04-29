@@ -9,7 +9,7 @@ public class EventHolder : MonoBehaviour
     }
     public void EventParse() {
         Event();
-        Debug.Log("successfully added " + gameObject.GetComponent(typeof (EventHolder)));
+        //Debug.Log("successfully added " + gameObject.GetComponent(typeof (EventHolder)));
     }
 
     protected virtual void Event() {

@@ -8,7 +8,7 @@ public class MusicManager : MonoBehaviour
     public AudioSource intro;
     public GameObject[] mainObj;
     public GameObject[] stalkedObj;
-
+    public bool skipIntro = true;
     AudioHandler[] main;
     AudioHandler[] stalked;
 
@@ -24,13 +24,30 @@ public class MusicManager : MonoBehaviour
     IEnumerator LateStart() {
         yield return new WaitForSecondsRealtime(1f);
         yield return new WaitUntil(() => gameObject.activeSelf == true);
-        intro.Play();
-        StartCoroutine(WaitForIntroFinish());
+        if (skipIntro) {
+            SkipIntro();
+            StopCoroutine(LateStart());
+        }
+        else {
+            intro.Play();
+            StartCoroutine(IntroVolume());
+            StartCoroutine(WaitForIntroFinish());
+        }
+    }
+    IEnumerator IntroVolume() {
+        intro.volume += 0.01f;
+        yield return new WaitForFixedUpdate();
+        if (intro.volume < 1f) {
+            StartCoroutine(IntroVolume());
+        }
     }
     IEnumerator WaitForIntroFinish() {
         yield return new WaitUntil(() => intro.isPlaying == false);
         main[0].IntroFade();
+        SkipIntro();
+    }
 
+    void SkipIntro() {
         for (int i = 0; i < main.Length; i++) {
             main[i].StartPlaying();
         }
@@ -61,9 +78,9 @@ public class MusicManager : MonoBehaviour
                 stalked[i].FadeOut();
         }
     }
-
     void FadeIn(AudioHandler target) {
         target.FadeIn();
+        //Debug.Log(target);
     }
 
     IEnumerator MusicManagerUpdate() {
@@ -79,26 +96,30 @@ public class MusicManager : MonoBehaviour
 
     void CheckForChanges() {
         if (_StaticGameManager.EventParsing.ContainsEvent("StalkingEye")) {
-            AudioHandler myAH = stalked[MyHandlerLevel(stalked)];
-            FadeOutAll(myAH);
-            FadeIn(myAH);
+            ChangeParse(stalked[MyHandlerLevel(stalked)]);
         }
         else {
-            AudioHandler myAH = main[MyHandlerLevel(main)];
-            FadeOutAll(myAH);
-            FadeIn(myAH);
+            ChangeParse(main[MyHandlerLevel(main)]);
         }
+    }
+
+    void ChangeParse(AudioHandler myAH) {
+        FadeOutAll(myAH);
+        FadeIn(myAH);
     }
 
     int MyHandlerLevel(AudioHandler[] myAH) {
         int r = 0;
-        int s = Mathf.RoundToInt(_StaticGameManager.Doors.DoorsOpened);
-        int m = _StaticGameManager.Doors.doorsUntilEnd;
-        if (s < m) {
-            float percent = s / m;
-            int length = myAH.Length;
-            r = Mathf.CeilToInt(length * percent);
+        int curdoor = Mathf.RoundToInt(_StaticGameManager.Doors.DoorsOpenedTwo);
+        int maxdoor = _StaticGameManager.Doors.doorsUntilEnd;
+        Debug.Log("Current doors = " + curdoor);
+        Debug.Log("Max doors = " + maxdoor);
+        if (curdoor < maxdoor) {
+            float percent = curdoor / (float)maxdoor;
+            int length = myAH.Length - 1;
+            r = Mathf.RoundToInt(length * percent);
         }
+        Debug.Log(r + " is the AudioHandler int returned from " + curdoor / (float)maxdoor + " percent, 'current doors opened / maxdoors'. This should mean that AudioHandler[r] is faded in.");
         return r;
     }
 }

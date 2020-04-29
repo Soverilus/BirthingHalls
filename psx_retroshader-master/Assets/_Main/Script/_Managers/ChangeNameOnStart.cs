@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class ChangeNameOnStart : MonoBehaviour
 {
 
@@ -42,14 +42,14 @@ public class ChangeNameOnStart : MonoBehaviour
         _StaticGameManager.EventParsing.EventParse();
         Time.timeScale = 1f;
         if (level != 0) {
-            Debug.Log("Played Door Open Sound");
+            //Debug.Log("Played Door Open Sound");
             myAS[0].Play();
             StartCoroutine(FadeIn());
         }
     }
 
     public void PlayOpenDoor() {
-        Debug.Log("Played Door close Sound");
+        //Debug.Log("Played Door close Sound");
         myAS[1].Play();
         StartCoroutine(FadeOut());
     }
@@ -77,6 +77,9 @@ public class ChangeNameOnStart : MonoBehaviour
 
     public void EventParser(string eventName) {
         //Debug.Log("test");
+        if (SceneManager.GetActiveScene().name == "end_Room") {
+            return;
+        }
         StartCoroutine(eventName);
     }
 
@@ -92,7 +95,7 @@ public class ChangeNameOnStart : MonoBehaviour
         }
         if (!myPlayer.GetComponent<MedKitEvent>())
             myPlayer.AddComponent<MedKitEvent>();
-        Debug.Log("Added MedKitEvent to " + gameObject.name);
+        //Debug.Log("Added MedKitEvent to " + gameObject.name);
         yield return new WaitForSeconds(1);
     }
 
@@ -102,7 +105,7 @@ public class ChangeNameOnStart : MonoBehaviour
         }
         if (!myPlayer.GetComponent<CounterEvent>())
             myPlayer.AddComponent<CounterEvent>();
-        Debug.Log("Added CounterEvent to " + gameObject.name);
+        //Debug.Log("Added CounterEvent to " + gameObject.name);
         yield return new WaitForSeconds(1);
     }
 
@@ -112,7 +115,7 @@ public class ChangeNameOnStart : MonoBehaviour
         }
         if (!myPlayer.GetComponent<StalkerEvent>())
             myPlayer.AddComponent<StalkerEvent>();
-        Debug.Log("Added StalkerEvent to " + gameObject.name);
+        //Debug.Log("Added StalkerEvent to " + gameObject.name);
         yield return new WaitForSeconds(1);
     }
 }

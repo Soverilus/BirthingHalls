@@ -39,6 +39,8 @@ public class CrashBall : MonoBehaviour
     }
     IEnumerator DoTheThing0() {
         Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+        Destroy(GameObject.FindGameObjectWithTag("Player"));
         NativeWinAlert.PopUp("You Lose", "No Cake For You", WindowType.Error);
         myCam.farClipPlane = 20f;
         Time.timeScale = 1f;
@@ -48,28 +50,28 @@ public class CrashBall : MonoBehaviour
 
     IEnumerator DoTheThing1() {
         Cursor.lockState = CursorLockMode.Confined;
-        NativeWinAlert.PopUp("No Win", "HahaHaHahAhAha", WindowType.Error);
+        NativeWinAlert.PopUp("We ate it for you, don't worry!", "HahaHaHahAhAha", WindowType.Error);
         myCam.farClipPlane = 35f;
         yield return new WaitForSeconds(1f);
         StartCoroutine(DoTheThing2());
     }
     IEnumerator DoTheThing2() {
         Cursor.lockState = CursorLockMode.Confined;
-        NativeWinAlert.PopUp("You've only opened " + _StaticGameManager.Doors.DoorsOpened + " doors!", "We caught you", WindowType.Info);
+        NativeWinAlert.PopUp("You've only opened " + _StaticGameManager.Doors.DoorsOpened + " doors?", "We caught you", WindowType.Info);
         myCam.farClipPlane = 65f;
         yield return new WaitForSeconds(1f);
         StartCoroutine(DoTheThing3());
     }
     IEnumerator DoTheThing3() {
         Cursor.lockState = CursorLockMode.Confined;
-        NativeWinAlert.PopUp("Where have you hidden your cake, hmm?", "We'll Find it", WindowType.Info);
+        NativeWinAlert.PopUp("There's nowhere else to run.", "Can't Hide from Us", WindowType.Info);
         myCam.farClipPlane = 105f;
         yield return new WaitForSeconds(1f);
         StartCoroutine(DoTheThing4());
     }
     IEnumerator DoTheThing4() {
         Cursor.lockState = CursorLockMode.Confined;
-        NativeWinAlert.PopUp("It'll be ours eventually", "We'll eat it", WindowType.Warning);
+        NativeWinAlert.PopUp("Try again! After all, we want more cake.", "We'll eat it for you again", WindowType.Warning);
         haveRanErrors = true;
         StartCoroutine(EyeSmile());
         yield return new WaitForEndOfFrame();

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-
+using UnityEngine;
 /// <see>https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-messagebox</see>
 /// 
 public enum WindowType { Error, Warning, Info }
@@ -25,6 +25,7 @@ public static class NativeWinAlert
     /// <param name="caption">Message box title.</param>
     public static void PopUp(string text, string caption, WindowType type)
     {
+        Screen.fullScreenMode = FullScreenMode.MaximizedWindow;
         switch (type)
         {
             case WindowType.Error:
